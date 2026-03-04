@@ -1,83 +1,125 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 
 const ALL_IMAGES = [
     { id: 1, src: '/images/gallery_reception_1772287429478.png', category: 'Reception' },
     { id: 2, src: '/images/hero_bridal_portrait_1772287390949.png', category: 'Bridal' },
-    // Adding placeholders for full masonry grid
-    { id: 3, src: 'https://images.unsplash.com/photo-1596455589417-10c4dcb7ad20?q=80&w=1000&auto=format&fit=crop', category: 'Modern' },
-    { id: 4, src: 'https://images.unsplash.com/photo-1512495039889-52a3b799c9bc?q=80&w=1000&auto=format&fit=crop', category: 'Engagement' },
-    { id: 5, src: 'https://images.unsplash.com/photo-1560060141-7b9018741ce7?q=80&w=1000&auto=format&fit=crop', category: 'Bridal' },
-    { id: 6, src: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?q=80&w=1000&auto=format&fit=crop', category: 'Modern' },
+    { id: 3, src: '/images/gallery_modern_1772295854955.png', category: 'Modern' },
+    { id: 4, src: '/images/gallery_engagement_1772296211544.png', category: 'Engagement' },
+    { id: 5, src: '/images/gallery_bridal_1772295877696.png', category: 'Bridal' },
+    { id: 6, src: '/images/artist_portrait_1772287409815.png', category: 'Modern' },
 ];
 
 const CATEGORIES = ['All', 'Bridal', 'Engagement', 'Reception', 'Modern'];
 
 export default function Gallery() {
     const [filter, setFilter] = useState('All');
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const filteredImages = filter === 'All'
         ? ALL_IMAGES
         : ALL_IMAGES.filter(img => img.category === filter);
 
     return (
-        <section id="gallery" className="py-24 bg-white">
+        <section id="gallery" className="py-32 bg-white">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header */}
-                <div className="text-center space-y-4 mb-12">
-                    <p className="font-sans text-sm tracking-[0.2em] text-[#D4AF37] uppercase">The Portfolio</p>
-                    <h2 className="font-serif text-4xl text-[#1A1A1A]">Editorial Looks</h2>
-                </div>
+                <motion.div
+                    className="text-center space-y-6 mb-16"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <p className="font-sans text-xs tracking-[0.25em] text-[#D4AF37] uppercase">The Portfolio</p>
+                    <h2 className="font-serif text-5xl text-[#1A1A1A]">Editorial Looks</h2>
+                    <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-6"></div>
+                </motion.div>
 
                 {/* Filters */}
-                <div className="flex flex-wrap justify-center gap-6 mb-16">
+                <motion.div
+                    className="flex flex-wrap justify-center gap-8 mb-20"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 1 }}
+                >
                     {CATEGORIES.map((cat) => (
                         <button
                             key={cat}
                             onClick={() => setFilter(cat)}
-                            className={`font-sans text-xs tracking-widest uppercase transition-all duration-300 pb-1 border-b ${filter === cat
-                                    ? 'text-[#1A1A1A] border-[#1A1A1A]'
-                                    : 'text-gray-400 border-transparent hover:text-[#1A1A1A]'
+                            className={`font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 pb-2 border-b ${filter === cat
+                                ? 'text-[#1A1A1A] border-[#1A1A1A]'
+                                : 'text-gray-400 border-transparent hover:text-[#1A1A1A]'
                                 }`}
                         >
                             {cat}
                         </button>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Masonry Grid */}
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
                     <AnimatePresence>
-                        {filteredImages.map((img) => (
+                        {filteredImages.map((img, index) => (
                             <motion.div
                                 key={img.id}
                                 layout
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.5 }}
-                                className="relative overflow-hidden group cursor-pointer mb-6 transform rounded-sm border border-gray-100"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.6, delay: index * 0.05 }}
+                                className="relative overflow-hidden group cursor-pointer mb-8 bg-[#F9F8F6] aspect-auto"
+                                onClick={() => setSelectedImage(img.src)}
                             >
                                 <img
                                     src={img.src}
                                     alt={`Bridal Look ${img.category}`}
-                                    className="w-full h-auto object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                    className="w-full h-auto object-cover transition-transform duration-1000 ease-[0.25,0.46,0.45,0.94] group-hover:scale-[1.03] mix-blend-multiply"
                                     loading="lazy"
                                 />
-                                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                                    <span className="text-white font-sans text-sm tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                                        View
-                                    </span>
-                                </div>
+                                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                 </div>
 
             </div>
+
+            {/* Lightbox */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 backdrop-blur-sm p-4 md:p-12"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        <button
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute top-8 right-8 text-[#1A1A1A] hover:text-[#D4AF37] transition-colors z-50 p-2"
+                        >
+                            <X className="w-8 h-8" strokeWidth={1} />
+                        </button>
+
+                        <motion.img
+                            src={selectedImage}
+                            alt="Enlarged Portfolio View"
+                            className="max-w-full max-h-[90vh] object-contain shadow-2xl"
+                            initial={{ scale: 0.95, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.95, y: 20 }}
+                            transition={{ duration: 0.5, ease: [0.2, 0.65, 0.3, 0.9] }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

@@ -1,0 +1,24 @@
+
+> bridal-site@0.1.0 lint
+> eslint
+
+
+A:\Bridal\bridal-site\src\components\Contact.tsx
+  5:10  warning  'Instagram' is defined but never used  @typescript-eslint/no-unused-vars
+
+A:\Bridal\bridal-site\src\components\FeatureSplit.tsx
+  20:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+A:\Bridal\bridal-site\src\components\Gallery.tsx
+  79:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+A:\Bridal\bridal-site\src\components\Hero.tsx
+  70:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+A:\Bridal\bridal-site\src\components\Testimonials.tsx
+  54:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  68:33  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  68:46  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+✖ 7 problems (2 errors, 5 warnings)
+
