@@ -25,7 +25,7 @@ const testimonials = [
 
 export default function Testimonials() {
     return (
-        <section className="py-32 bg-[#FAF5F7]">
+        <section className="py-20 md:py-32 bg-[#FAF5F7]">
             {/* Soft Blush background #FAF5F7 instead of harsh pink */}
             <div className="max-w-7xl mx-auto px-6">
 
@@ -37,11 +37,11 @@ export default function Testimonials() {
                     transition={{ duration: 0.8 }}
                 >
                     <p className="font-sans text-xs tracking-[0.25em] text-[#D4AF37] uppercase">Love Letters</p>
-                    <h2 className="font-serif text-5xl text-[#1A1A1A]">From the Brides</h2>
+                    <h2 className="font-serif text-4xl md:text-5xl text-[#1A1A1A]">From the Brides</h2>
                     <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-6"></div>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 lg:gap-20">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 lg:gap-20">
                     {testimonials.map((test, index) => (
                         <motion.div
                             key={index}

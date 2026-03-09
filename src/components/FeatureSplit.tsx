@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export default function FeatureSplit() {
     return (
-        <section id="about" className="py-24 bg-[#F6F4F1] overflow-hidden">
+        <section id="about" className="py-16 md:py-24 bg-[#F6F4F1] overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16 lg:gap-24">
 
                 {/* Left: Portrait Image */}
@@ -35,7 +35,7 @@ export default function FeatureSplit() {
                     transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
                 >
                     <div className="space-y-4">
-                        <h2 className="font-serif text-5xl md:text-6xl text-[#1A1A1A] leading-tight">
+                        <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-[#1A1A1A] leading-tight">
                             All Eyes on <span className="italic text-gray-500">You</span>
                         </h2>
                         <div className="w-16 h-[1px] bg-[#D4AF37]"></div>

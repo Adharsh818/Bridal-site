@@ -25,7 +25,7 @@ export default function Gallery() {
         : ALL_IMAGES.filter(img => img.category === filter);
 
     return (
-        <section id="gallery" className="py-32 bg-white">
+        <section id="gallery" className="py-20 md:py-32 bg-white">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header */}
@@ -37,13 +37,13 @@ export default function Gallery() {
                     transition={{ duration: 0.8 }}
                 >
                     <p className="font-sans text-xs tracking-[0.25em] text-[#D4AF37] uppercase">The Portfolio</p>
-                    <h2 className="font-serif text-5xl text-[#1A1A1A]">Editorial Looks</h2>
+                    <h2 className="font-serif text-4xl md:text-5xl text-[#1A1A1A]">Editorial Looks</h2>
                     <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-6"></div>
                 </motion.div>
 
                 {/* Filters */}
                 <motion.div
-                    className="flex flex-wrap justify-center gap-8 mb-20"
+                    className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12 md:mb-20"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}

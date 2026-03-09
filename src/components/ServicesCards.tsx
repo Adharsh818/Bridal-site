@@ -27,7 +27,7 @@ const services = [
 
 export default function ServicesCards() {
     return (
-        <section id="services" className="py-32 bg-[#F9F8F6]">
+        <section id="services" className="py-20 md:py-32 bg-[#F9F8F6]">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     className="text-center space-y-6 mb-20"
@@ -37,7 +37,7 @@ export default function ServicesCards() {
                     transition={{ duration: 0.8 }}
                 >
                     <p className="font-sans text-xs tracking-[0.25em] text-[#D4AF37] uppercase">Signature Experiences</p>
-                    <h2 className="font-serif text-5xl text-[#1A1A1A]">Curated Services</h2>
+                    <h2 className="font-serif text-4xl md:text-5xl text-[#1A1A1A]">Curated Services</h2>
                     <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-6"></div>
                 </motion.div>
 
@@ -45,7 +45,7 @@ export default function ServicesCards() {
                     {services.map((service, index) => (
                         <motion.div
                             key={index}
-                            className="p-12 pb-16 flex flex-col items-center text-center group bg-white border border-[#EBEBE3] rounded-sm hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#D4AF37]/5 transition-all duration-500 ease-out"
+                            className="p-8 md:p-12 pb-12 md:pb-16 flex flex-col items-center text-center group bg-white border border-[#EBEBE3] rounded-sm hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#D4AF37]/5 transition-all duration-500 ease-out"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}

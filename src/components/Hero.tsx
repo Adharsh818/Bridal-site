@@ -23,7 +23,7 @@ export default function Hero() {
                     transition={{ duration: 1.4, ease: [0.2, 0.65, 0.3, 0.9] }}
                 >
                     <div className="space-y-6">
-                        <h1 className="font-serif text-6xl md:text-[5.5rem] lg:text-[7.5rem] leading-[1.0] text-[#1A1A1A] tracking-normal">
+                        <h1 className="font-serif text-5xl md:text-[5.5rem] lg:text-[7.5rem] leading-[1.1] md:leading-[1.0] text-[#1A1A1A] tracking-normal">
                             Timeless <br />
                             <span className="italic font-light text-[#3A3A3A]">Beauty for</span> <br />
                             Your Day.

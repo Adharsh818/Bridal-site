@@ -5,30 +5,64 @@ import { motion } from 'framer-motion';
 import { Send, MapPin, Mail, Phone, CheckCircle2 } from 'lucide-react';
 
 export default function Contact() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        date: '',
+        type: 'Bridal Makeup',
+        message: ''
+    });
+
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitted(true);
-        setTimeout(() => setIsSubmitted(false), 3000);
+        setIsSubmitting(true);
+        setError('');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            setIsSubmitted(true);
+            setFormData({ name: '', email: '', date: '', type: 'Bridal Makeup', message: '' });
+            setTimeout(() => setIsSubmitted(false), 5000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     return (
-        <section id="contact" className="py-32 bg-[#F9F8F6]">
+        <section id="contact" className="py-20 md:py-32 bg-[#F9F8F6]">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
 
                     {/* Left: Booking Form */}
                     <motion.div
-                        className="flex-1 bg-white p-10 md:p-16 border border-[#EBEBE3] shadow-2xl shadow-[#D4AF37]/5 relative overflow-hidden"
+                        className="flex-1 bg-white p-6 md:p-16 border border-[#EBEBE3] shadow-2xl shadow-[#D4AF37]/5 relative overflow-hidden"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
                         <div className="mb-12">
-                            <h2 className="font-serif text-4xl text-[#1A1A1A] mb-3">Book Your Date</h2>
+                            <h2 className="font-serif text-3xl md:text-4xl text-[#1A1A1A] mb-3">Book Your Date</h2>
                             <p className="font-sans text-sm text-gray-500 font-light leading-relaxed">
                                 Please fill out the form below to inquire about availability and pricing for your special event.
                             </p>
@@ -38,39 +72,42 @@ export default function Contact() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-3 group">
                                     <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 group-focus-within:text-[#D4AF37] transition-colors">Name</label>
-                                    <input type="text" required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm hover:border-gray-300" placeholder="Your Name" />
+                                    <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm hover:border-gray-300" placeholder="Your Name" />
                                 </div>
                                 <div className="space-y-3 group">
                                     <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 group-focus-within:text-[#D4AF37] transition-colors">Email</label>
-                                    <input type="email" required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm hover:border-gray-300" placeholder="hello@example.com" />
+                                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm hover:border-gray-300" placeholder="hello@example.com" />
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-3 group">
                                     <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 group-focus-within:text-[#D4AF37] transition-colors">Event Date</label>
-                                    <input type="date" required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm text-gray-600 hover:border-gray-300" />
+                                    <input type="date" name="date" value={formData.date} onChange={handleChange} required className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm text-gray-600 hover:border-gray-300" />
                                 </div>
                                 <div className="space-y-3 group">
                                     <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 group-focus-within:text-[#D4AF37] transition-colors">Event Type</label>
-                                    <select className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm text-gray-600 hover:border-gray-300">
-                                        <option>Bridal Makeup</option>
-                                        <option>Reception Glam</option>
-                                        <option>Engagement / Party</option>
-                                        <option>Other Event</option>
+                                    <select name="type" value={formData.type} onChange={handleChange} className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm text-gray-600 hover:border-gray-300">
+                                        <option value="Bridal Makeup">Bridal Makeup</option>
+                                        <option value="Reception Glam">Reception Glam</option>
+                                        <option value="Engagement / Party">Engagement / Party</option>
+                                        <option value="Other Event">Other Event</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div className="space-y-3 group">
                                 <label className="font-sans text-[10px] tracking-[0.2em] uppercase text-gray-400 group-focus-within:text-[#D4AF37] transition-colors">Message Details</label>
-                                <textarea required rows={4} className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm resize-none hover:border-gray-300" placeholder="Tell me more about your requirements..."></textarea>
+                                <textarea name="message" value={formData.message} onChange={handleChange} required rows={4} className="w-full bg-transparent border-b border-gray-200 py-3 focus:outline-none focus:border-[#D4AF37] transition-all font-sans text-sm resize-none hover:border-gray-300" placeholder="Tell me more about your requirements..."></textarea>
                             </div>
+
+
 
                             <button
                                 type="submit"
+                                disabled={isSubmitting}
                                 className={`w-full py-5 font-sans justify-center text-sm tracking-[0.2em] uppercase transition-all duration-500 flex items-center gap-3 relative overflow-hidden ${isSubmitted ? 'bg-[#D4AF37] text-white' : 'bg-[#1A1A1A] hover:bg-[#D4AF37] text-white hover:shadow-lg hover:-translate-y-1'
-                                    }`}
+                                    } ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 onMouseEnter={() => setIsHovering(true)}
                                 onMouseLeave={() => setIsHovering(false)}
                             >
@@ -85,8 +122,8 @@ export default function Contact() {
                                     </motion.div>
                                 ) : (
                                     <>
-                                        Submit Inquiry
-                                        <Send className={`w-4 h-4 transition-transform duration-300 ${isHovering ? 'translate-x-1 -translate-y-1' : ''}`} />
+                                        {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+                                        <Send className={`w-4 h-4 transition-transform duration-300 ${!isSubmitting && isHovering ? 'translate-x-1 -translate-y-1' : ''}`} />
                                     </>
                                 )}
                             </button>
@@ -95,7 +132,7 @@ export default function Contact() {
 
                     {/* Right: Contact Info & Insta */}
                     <motion.div
-                        className="flex-1 space-y-16 py-8"
+                        className="flex-1 space-y-12 md:space-y-16 py-8"
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -103,7 +140,7 @@ export default function Contact() {
                     >
                         <div>
                             <p className="font-sans text-xs tracking-[0.25em] text-[#D4AF37] uppercase mb-4">Get In Touch</p>
-                            <h2 className="font-serif text-5xl text-[#1A1A1A] leading-tight">Let&apos;s Create <br /><i className="font-light text-gray-500">Magic</i></h2>
+                            <h2 className="font-serif text-4xl md:text-5xl text-[#1A1A1A] leading-tight">Let&apos;s Create <br /><i className="font-light text-gray-500">Magic</i></h2>
                         </div>
 
                         <div className="space-y-8">

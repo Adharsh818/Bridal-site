@@ -1,8 +1,10 @@
-import React from 'react';
-import { Instagram } from 'lucide-react';
-import { Sparkles } from 'lucide-react';
+'use client';
+
+import React, { useState } from 'react';
+import { Instagram, Sparkles, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <header className="absolute top-0 w-full z-50 bg-transparent">
             {/* Kept absolute position so it overlays on top of the hero naturally. */}
@@ -28,7 +30,7 @@ export default function Navbar() {
                     ))}
                 </nav>
 
-                {/* Social Icons */}
+                {/* Social Icons (Desktop) */}
                 <div className="hidden md:flex items-center gap-4">
                     <a href="#" className="w-8 h-8 rounded-full border border-[#1A1A1A]/20 flex items-center justify-center text-[#1A1A1A] hover:bg-[#D4AF37] hover:text-white hover:border-[#D4AF37] transition-all">
                         <Instagram className="w-4 h-4" />
@@ -38,7 +40,38 @@ export default function Navbar() {
                     </a>
                 </div>
 
+                {/* Mobile Menu Button */}
+                <button
+                    className="md:hidden text-[#1A1A1A] p-2"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+
             </div>
+
+            {/* Mobile Navigation Dropdown */}
+            {isOpen && (
+                <div className="md:hidden absolute top-24 left-0 w-full bg-white/95 backdrop-blur-md shadow-xl border-t border-[#EBEBE3]">
+                    <nav className="flex flex-col items-center py-8 gap-6">
+                        {["Home", "About", "Services", "Gallery", "Blog", "Contact"].map((item) => (
+                            <a
+                                key={item}
+                                href={`#${item.toLowerCase()}`}
+                                onClick={() => setIsOpen(false)}
+                                className="text-sm font-light tracking-[0.15em] text-[#1A1A1A] uppercase"
+                            >
+                                {item}
+                            </a>
+                        ))}
+                        <div className="flex items-center gap-6 mt-4 pt-6 border-t border-[#EBEBE3] w-1/2 justify-center">
+                            <a href="#" className="text-[#1A1A1A] hover:text-[#D4AF37]">
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            )}
         </header>
     );
 }
